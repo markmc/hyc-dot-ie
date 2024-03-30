@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import re
 import sys
 
 import argparse
@@ -18,6 +17,9 @@ if result.status_code != 200:
     print('Failed to log in', file=sys.stderr)
     sys.exit(1)
 
-for r in get_resources(session):
-    print(f"Downloading {r}")
-    get_file(session, str(r), args.dir)
+resources = get_resources(session)
+
+write_metadata(resources, args.dir)
+
+for r in resources:
+    get_file(session, r['download_url'], args.dir)
