@@ -4,7 +4,7 @@ import sys
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("dir", help='Destination director')
+parser.add_argument("dir", help='Destination directory')
 args = parser.parse_args()
 
 import requests
