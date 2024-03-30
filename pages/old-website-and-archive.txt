@@ -1,0 +1,1 @@
+['\n<p style="text-align: center;">\n\tClick below link to access archival material:</p>\n<p style="text-align: center;">\n\t<strong><a href="http://old.hyc.ie"><span style="color:#0000ff;">old.hyc.ie</span></a></strong></p>\n']

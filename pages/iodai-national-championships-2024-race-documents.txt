@@ -1,0 +1,1 @@
+['\n<p>\n\tThe race documents for the event will be posted here, including:</p>\n<ul>\n\t<li>\n\t\tNotice of Race (NOR)</li>\n\t<li>\n\t\tSupplementary Sailing Instructions (SSIs)</li>\n\t<li>\n\t\tIODAI Major Event Sailing Instructions (SIs)</li>\n</ul>\n']

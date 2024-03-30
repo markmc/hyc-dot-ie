@@ -1,0 +1,1 @@
+['\n<div class="media_embed" style="text-align: center;">\n\t<iframe frameborder="0" height="500" src="https://www.weatherlink.com/embeddablePage/show/f8599df057684824a8e264b6a375e3a7/fullscreen" width="600"></iframe></div>\n']

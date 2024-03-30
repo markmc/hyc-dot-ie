@@ -1,0 +1,1 @@
+['\n<p>\n\tRegistration details will be posted here, including:</p>\n<ul>\n\t<li>\n\t\tThe location of the registration desk</li>\n\t<li>\n\t\tRegistration times</li>\n\t<li>\n\t\tDetails of tally stickers and ribbons</li>\n\t<li>\n\t\tClub access code</li>\n\t<li>\n\t\tSecurity advice</li>\n</ul>\n']
