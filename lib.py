@@ -22,6 +22,12 @@ def login(session):
 
     return session.post(URL_BASE + "/login", data=payload)
 
+
+def write_metadata(objects, directory):
+    print(f"Writing {directory}/metadata.json")
+    s = json.dumps(objects)
+    open(os.path.join(directory, 'metadata.json'), 'w').write(s)
+
 def get_resources_page(session, url):
     resources_text = session.get(URL_BASE + url).text
     tree = html.fromstring(resources_text)
@@ -45,6 +51,18 @@ def get_resources(session):
         resources.extend(next_resources)
     return resources
 
+def get_file(session, url, directory):
+    filename = os.path.basename(url)
+    if "?" in filename:
+        filename = filename.split("?")[0]
+    path = os.path.join(directory, filename)
+    if not os.path.exists(path):
+        print(f"Downloading {path}")
+        r = session.get(URL_BASE + url)
+        open(path, 'wb').write(r.content)
+    else:
+        print(f"Skipping {path}")
+
 def get_pages_page(session, url):
     pages_text = session.get(URL_BASE + url).text
     tree = html.fromstring(pages_text)
@@ -65,18 +83,6 @@ def get_pages(session):
         pages.extend(next_pages)
     return pages
 
-def get_file(session, url, directory):
-    filename = os.path.basename(url)
-    if "?" in filename:
-        filename = filename.split("?")[0]
-    path = os.path.join(directory, filename)
-    if not os.path.exists(path):
-        print(f"Downloading {path}")
-        r = session.get(URL_BASE + url)
-        open(path, 'wb').write(r.content)
-    else:
-        print(f"Skipping {path}")
-
 def get_page_editor_content(session, edit_url, url, directory):
     filename = os.path.basename(url) + ".txt"
     path = os.path.join(directory, filename)
@@ -89,7 +95,34 @@ def get_page_editor_content(session, edit_url, url, directory):
     else:
         print(f"Skipping {path}")
 
-def write_metadata(objects, directory):
-    print(f"Writing {directory}/metadata.json")
-    s = json.dumps(objects)
-    open(os.path.join(directory, 'metadata.json'), 'w').write(s)
+def get_images_page(session, url):
+    images_text = session.get(URL_BASE + url).text
+    tree = html.fromstring(images_text)
+    images = []
+    for row in tree.xpath("//tr[@class='odd' or @class='even']"):
+        image = {}
+        image['name'] = row.xpath('.//td[1]/a/@href')[0].replace('/admin/images/', '')
+        image['thumb_url'] = row.xpath('.//td[1]/a/img/@src')[0]
+        image['download_url'] = image['thumb_url'].replace('thumb', 'custom')
+        image['description'] = row.xpath('.//td[4]/text()')[0]
+        image['mimetype'] = row.xpath('.//td[5]/text()')[0]
+        image['date'] = row.xpath('.//td[6]/text()')[0]
+        images.append(image)
+    next_hrefs = tree.xpath("//a[@rel='next']/@href")
+    return (images, next_hrefs[0] if len(next_hrefs) > 0 else None)
+
+def get_images(session):
+    images, next_url = get_images_page(session, "/admin/images")
+    while next_url:
+        next_images, next_url = get_images_page(session, next_url)
+        images.extend(next_images)
+    return images
+
+def get_image(session, filename, url, directory):
+    path = os.path.join(directory, filename)
+    if not os.path.exists(path):
+        print(f"Downloading {path}")
+        r = session.get(URL_BASE + url)
+        open(path, 'wb').write(r.content)
+    else:
+        print(f"Skipping {path}")

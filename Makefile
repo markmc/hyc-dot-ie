@@ -1,5 +1,5 @@
 
-all: backup-resources backup-pages
+all: backup-resources backup-pages backup-images
 
 clean:
 	rm -rf ./venv/
@@ -25,3 +25,7 @@ backup-resources: require_admin_password venv
 backup-pages: require_admin_password venv
 	. ./venv/bin/activate && \
 	  ./backup-pages ./pages
+
+backup-images: require_admin_password venv
+	. ./venv/bin/activate && \
+	  ./backup-images ./images
