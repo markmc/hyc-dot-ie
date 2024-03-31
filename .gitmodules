@@ -1,3 +1,6 @@
 [submodule "resources"]
 	path = resources
 	url = https://github.com/markmc/hyc-dot-ie-resources
+[submodule "images"]
+	path = images
+	url = https://github.com/markmc/hyc-dot-ie-images
